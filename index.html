@@ -133,6 +133,16 @@
                 }
 
             });//end of submit 
+            
+            this.document.forms[0].addEventListener('reset',function(data){
+                if(!confirm('are you sure you want to reset')){ 
+                    //prevent default
+                    data.preventDefault();
+                    username.className = '';
+                    userpass.className = '';
+                    useremail.className = '';
+                }
+            });// end of reset event
         });//End of load
 
         function isUserNameValid() {
