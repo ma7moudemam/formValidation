@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            /* border: 2px solid black; */
+            margin: 10px auto;
+            width: 600px;
+        }
+
+        td {
+            /* border: 1px solid black; */
+            padding: 2px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 500px;
+            border-radius: 5px;
+        }
+
+        span {
+            display: none;
+            font: bold 10px tahoma;
+            text-align: center;
+            color: red;
+        }
+
+        .error {
+            border: 2px solid red;
+        }
+
+        .succes {
+            border: 2px solid green;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+        }
+    </style>
+    <script>
+        window.addEventListener('load', function () {
+
+            //get all inputs
+            username = document.getElementById('username');
+            userpass = document.getElementById('userpass');
+            useremail = document.getElementById('useremail');
+
+
+            //username span
+            usernameSpan = document.getElementById('usernamespan');
+            userpassSpan = document.getElementById('userpassspan');
+            useremailSpan = document.getElementById('useremailpan');
+
+
+            //validate username
+            username.addEventListener('blur', function () {
+                if (!isUserNameValid()) {
+                    //show error message
+                    usernameSpan.style.display = 'block';
+                    username.focus();
+                    username.select();
+                    //add class error
+                    username.className = 'error';
+                } else {
+                    usernameSpan.style.display = 'none';
+                    username.className = 'succes';
+                }
+            });//end of username validator
+
+            //vaildate password
+            userpass.addEventListener('blur', function () {
+
+                if (!isPasswordVaild()) {
+                    userpassSpan.style.display = 'block';
+                    userpass.focus();
+                    userpass.select();
+                    userpass.className = 'error';
+                } else {
+                    userpassSpan.style.display = 'none';
+                    userpass.className = 'succes';
+                }
+
+            });//end of password validator
+
+            //validate email
+            useremail.addEventListener('blur', function () {
+                if (!isEmailValid()) {
+                    useremailSpan.style.display = 'block';
+                    useremail.focus();
+                    useremail.select();
+                    useremail.className = 'error';
+                } else {
+                    useremailSpan.style.display = 'none';
+                    useremail.className = 'succes';
+                }
+            });//end of email validator
+
+            //submit event 
+            document.forms[0].addEventListener('submit', function (data) {
+
+                if (!(isUserNameValid() && isEmailValid() && isPasswordVaild())) {
+                    //prevent default
+                    data.preventDefault();
+                }
+                if (!isUserNameValid()) {
+                    //show error message
+                    usernameSpan.style.display = 'block';
+                    username.focus();
+                    username.select();
+                    //add class error
+                    username.className = 'error';
+                }
+                if (!isPasswordVaild()) {
+                    //show error message
+                    userpassSpan.style.display = 'block';
+                    userpass.focus();
+                    userpass.select();
+                    userpass.className = 'error';
+                }
+                if (!isEmailValid()) {
+                    //show error message
+                    useremailSpan.style.display = 'block';
+                    useremail.focus();
+                    useremail.select();
+                    useremail.className = 'error';
+                }
+
+            });//end of submit 
+        });//End of load
+
+        function isUserNameValid() {
+            var userNamePattern = /^[a-zA-Z]{5,10}$/;
+            return username.value.match(userNamePattern);
+
+        }
+        function isPasswordVaild() {
+            var userpassPattern = /^[1-9]{5,10}$/;
+            return userpass.value.match(userpassPattern);
+        }
+
+        function isEmailValid() {
+            var useremailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            return useremail.value.match(useremailPattern);
+        }
+    </script>
+</head>
+
+<body>
+    <form action="">
+        <table>
+            <tr>
+                <td rowspan="2">Name</td>
+                <td><input type="text" id="username"></td>
+            </tr>
+            <tr>
+                <td><span id="usernamespan">Incorrect user Name :[A-Z] {4,6} </span></td>
+            </tr>
+            <tr>
+                <td rowspan="2">Password</td>
+                <td><input type="password" id="userpass"></td>
+            </tr>
+            <tr>
+                <td><span id="userpassspan">Incorrect user pass :[0-9] {5,7} </span></td>
+            </tr>
+            <tr>
+                <td rowspan="2">Email</td>
+                <td><input type="text" id="useremail"></td>
+            </tr>
+            <tr>
+                <td><span id="useremailpan">Incorrect user email :user@domain.com </span></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Ok"></td>
+                <td><input type="reset" value="Reset"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
